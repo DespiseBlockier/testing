@@ -47,7 +47,7 @@ end
 
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/miroeramaa/TurtleLib/main/TurtleUiLib.lua"))()
 
-local win = library:Window("Main - Made by blockier")
+local win = library:Window("Main - Made by blockier - V1")
 
 win:Toggle("Auto Pushups", false, function(state)
     _G.Settings.AutoPushups = state
