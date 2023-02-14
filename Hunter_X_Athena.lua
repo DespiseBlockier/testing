@@ -1,6 +1,7 @@
-_G.Settings = {
+if game.PlaceId == 11756661207 then
+    _G.Settings = {
     ["AutoPushups"] = false,
-}
+    }
 
 local LocalPlayer = game.Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -57,3 +58,7 @@ win:Toggle("Auto Pushups", false, function(state)
     end
 end)
 
+else 
+    print("join Hunter X Athena")
+    
+    end
