@@ -1,4 +1,4 @@
-if game.PlaceId == 11756661207 then
+if game.PlaceId == 11676335670 then
     _G.Settings = {
     ["AutoPushups"] = false,
     }
