@@ -1,9 +1,6 @@
--- setconstant(mod.CalculatePetCapacity, 7, 10000)
---setupvalue(function or som, index, new value)
 
 if game.PlaceId == 5490351219 then
-
-getgenv().autoTap = false
+    getgenv().autoTap = false
 getgenv().autoRebirth = false
 getgenv().buyEgg = false
 getgenv().attackboss = false
@@ -246,46 +243,6 @@ end)
 f:Button("Flag 13",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1047.29468, 6.0768919, 553.452148, 0.0641621798, 1.51397579e-08, -0.997939467, -1.82400193e-08, 1, 1.39982816e-08, 0.997939467, 1.73042736e-08, 0.0641621798)
 end)
-
--- b:Toggle("Toggle",function(bool)
---     shared.toggle = bool
---     print(shared.toggle)
--- end)
-
--- b:Slider("Slider",{
---     min = 10; -- min value of the slider
---     max = 50; -- max value of the slider
---     precise = true; -- max 2 decimals
--- },function(value)
---     print(value)
--- end)
-
--- b:Dropdown("Dropdown",{"A","B","C"},true,function(mob) --true/false, replaces the current title "Dropdown" with the option that t
---     print(mob)
--- end)
-
--- b:Bind("Bind",Enum.KeyCode.C,function() --Default bind
---     print("Yes")
--- end)
-
--- b:ColorPicker("ColorPicker",Color3.fromRGB(255,0,0),function(color) --Default color
---     print(color)
--- end)
-
--- b:Box("Box","number",function(value) -- "number" or "string"
---     print(value)
--- end)
--- print("-_-upvalues-_-")
--- for i,v in pairs(getupvalues(mod.CalculatePetCapacity)) do
---         print(i,v)
--- end
--- print("====")
--- print("-_-constants-_-")
--- for i,v in pairs(getconstants(mod.CalculatePetCapacity)) do
---     print(i,v)
--- end
-    
-    
     else
     print(join Clicker Madness)
     end
