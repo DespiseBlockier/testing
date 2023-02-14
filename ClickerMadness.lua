@@ -244,6 +244,6 @@ f:Button("Flag 13",function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1047.29468, 6.0768919, 553.452148, 0.0641621798, 1.51397579e-08, -0.997939467, -1.82400193e-08, 1, 1.39982816e-08, 0.997939467, 1.73042736e-08, 0.0641621798)
 end)
     else
-    print(join Clicker Madness)
+    print("join Clicker Madness")
     end
 
