@@ -1,6 +1,8 @@
 -- setconstant(mod.CalculatePetCapacity, 7, 10000)
 --setupvalue(function or som, index, new value)
 
+if game.PlaceId == 5490351219 then
+
 getgenv().autoTap = false
 getgenv().autoRebirth = false
 getgenv().buyEgg = false
@@ -282,3 +284,9 @@ end)
 -- for i,v in pairs(getconstants(mod.CalculatePetCapacity)) do
 --     print(i,v)
 -- end
+    
+    
+    else
+    print(join Clicker Madness)
+    end
+
