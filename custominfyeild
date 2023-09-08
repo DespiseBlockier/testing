@@ -5504,7 +5504,7 @@ function ESP(plr)
 					if COREGUI:FindFirstChild(plr.Name..'_ESP') then
 						if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
 							local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos "\n Chakra: "..plr.Chakra.Value " Rank:" .. plr.leaderstats.Rank " Title: "..plr.leaderstats.Rating
+							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos "\n Chakra: "..plr.Chakra " Rank:" .. plr.leaderstats.Rank " Title: "..plr.leaderstats.Rating
 						end
 					else
 						teamChange:Disconnect()
@@ -5657,7 +5657,7 @@ function Locate(plr)
 					if COREGUI:FindFirstChild(plr.Name..'_LC') then
 						if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
 							local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos "\n Chakra: "..plr.Chakra.Value " Rank:" .. plr.leaderstats.Rank " Title: "..plr.leaderstats.Rating
+							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos "\n Chakra: "..plr.Chakra " Rank:" .. plr.leaderstats.Rank " Title: "..plr.leaderstats.Rating
 						end
 					else
 						teamChange:Disconnect()
