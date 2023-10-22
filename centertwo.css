@@ -1,0 +1,20 @@
+[class~="overlays"] label {
+    place-items: center2;
+}
+#center2,
+[class~="fullscreens"],
+#socials {
+    position: fixed;
+}
+[class~="fullscreens"],
+#center2{
+    top: 35%;
+}
+#center2,
+[class~="fullscreens"] {
+    left: 50%;
+}
+[class~="fullscreens"],
+#center2{
+    transform: translate(-50%, -50%);
+}
