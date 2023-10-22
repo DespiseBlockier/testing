@@ -8,7 +8,7 @@
 }
 [class~="fullscreens"],
 #testcenter{
-    top: 70%;
+    top: 20%;
 }
 #testcenter,
 [class~="fullscreens"] {
@@ -16,5 +16,5 @@
 }
 [class~="fullscreens"],
 #testcenter{
-    transform: translate(-20%, -50%);
+    transform: translate(-50%, -50%);
 }
