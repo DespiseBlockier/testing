@@ -1,20 +1,20 @@
-[class~="overlay"] label {
+[class~="overlays"] label {
     place-items: testcenter;
 }
 #testcenter,
-[class~="fullscreen"],
+[class~="fullscreens"],
 #socials {
     position: fixed;
 }
-[class~="fullscreen"],
+[class~="fullscreens"],
 #testcenter{
     top: 70%;
 }
 #testcenter,
-[class~="fullscreen"] {
+[class~="fullscreens"] {
     left: 50%;
 }
-[class~="fullscreen"],
+[class~="fullscreens"],
 #testcenter{
     transform: translate(-20%, -50%);
 }
