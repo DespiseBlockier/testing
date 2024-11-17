@@ -81,6 +81,13 @@ end
 
 -- Local Functions
 
+local function TpToNpc(Location, Npc)
+    local V3 = TpInfo[Location][Npc]
+    local Character = Player.Character
+    local HumanoidRootPart = Character.HumanoidRootPart
+    HumanoidRootPart.Position = V3
+end
+
 local function createInvisibleWalls()
     local character = Player.Character
     if not character then return end
@@ -328,21 +335,23 @@ local Auto_Catch = Main:CreateToggle({
     local Moosewood_Tps = Teleports:CreateDropdown({
         Name = "Moosewood Tps",
         Options = NpcTp["Moosewood"],
-        CurrentOption = NpcSelected,
+        CurrentOption = "nothing",
         MultipleOptions = false,
         Flag = "Moosewood_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
             local Selected = table.concat(Options, "")
+            TpToNpc("Moosewood", Selected)
         end,
      })
 
      local Roslit_Tps = Teleports:CreateDropdown({
         Name = "Roslit Tps",
         Options = NpcTp["Roslit"],
-        CurrentOption = NpcSelected,
+        CurrentOption = "nothing",
         MultipleOptions = false,
         Flag = "Roslit_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
             local Selected = table.concat(Options, "")
+            TpToNpc("Roslit", Selected)
         end,
      })
