@@ -50,18 +50,74 @@ local CenterShakeOn = false
 local connection
 
 local NpcTp = {
-    ["Moosewood"] = {"Merchant", "Angler"},
-    ["Roslit"] = {"Merchant", "Shipwright"}
+    ["Moosewood"] = {"Merchant", "Angler", "Shipwright", "Bait Crate"},
+    ["Roslit"] = {"Merchant", "Shipwright", "Blacksmith", "Angler", "Orc"},
+    ["Terrapin"] = {"Shipwright", "Angler", "Tempest Totem"},
+    ["Snowcap"] = {"Merchant", "Shipwright", "Windset Totem"},
+    ["Mushgrove"] = {"Shipwright", "Guard", "Smokescreen Totem"},
+    ["Statue/Altar"] = {"Shipwright", "Altar", "Kings Rod"},
+    ["Sunstone"] = {"Merchant", "Shipwright", "Angler", "Merlin", "Sundial Totem"},
+    ["Forshaken"] = {"Merchant", "Shipwright", "Jack Marrow"},
+    ["Desolate Deep"] = {"Merchant", "Aurora Totem", "Mirror"},
+    ["Vertigo/Depths"] = {"Synph", "Merchant", "Angler", "Rod Of The Depths"}
 }
 
 local TpInfo = {
     ["Moosewood"] = {
         ["Merchant"] = Vector3.new(466, 152, 233),
-        ["Angler"] = Vector3.new(482, 152, 292)
+        ["Angler"] = Vector3.new(482, 152, 292),
+        ["Shipwright"] = Vector3.new(371.12579345703125, 134.5, 257.9131774902344),
+        ["Bait Crate"] = Vector3.new(386.3650817871094, 136.994140625, 332.92950439453125),
     },
     ["Roslit"] = {
         ["Merchant"] = Vector3.new(-1461, 135, 687),
-        ["Shipwright"] = Vector3.new(-1454, 135, 739)
+        ["Shipwright"] = Vector3.new(-1454, 135, 739),
+        ["Blacksmith"] = Vector3.new(-1515.7818603515625, 141.53482055664062, 765.197998046875),
+        ["Angler"] = Vector3.new(-1701.0369873046875, 148.00003051757812, 744.76171875),
+        ["Orc"] = Vector3.new(-1847.8408203125, 165.71112060546875, 159.76864624023438),
+    },
+    ["Terrapin"] = {
+        ["Shipwright"] = Vector3.new(-193.9357452392578, 132.50003051757812, 1923.2353515625),
+        ["Angler"] = Vector3.new(-190.3231658935547, 135.73648071289062, 1961.044189453125),
+        ["Tempest Totem"] = Vector3.new(34.79384231567383, 132.5, 1942.04296875),
+    },
+    ["Snowcap"] = {
+        ["Merchant"] = Vector3.new(2703.533447265625, 156.33917236328125, 2380.538818359375),
+        ["Shipwright"] = Vector3.new(2611.35888671875, 135.2838592529297, 2397.1083984375),
+        ["Windset Totem"] = Vector3.new(2843.06640625, 178.52365112304688, 2700.76904296875),
+    },
+    ["Mushgrove"] = {
+        ["Shipwright"] = Vector3.new(2453.16064453125, 130.67092895507812, -666.2625732421875),
+        ["Guard"] = Vector3.new(2515.72265625, 135.27984619140625, -896.5731811523438),
+        ["Smokescreen Totem"] = Vector3.new(2787.776611328125, 139.8306884765625, -623.9853515625),
+    },
+    ["Statue/Altar"] = {
+        ["Shipwright"] = Vector3.new(41.72389602661133, 133.01937866210938, -1009.7996826171875),
+        ["Altar"] = Vector3.new(1306.2451171875, -805.292236328125, -100.01531982421875),
+        ["Kings Rod"] = Vector3.new(1384.31640625, -807.069580078125, -305.2335205078125)
+    },
+    ["Sunstone"] = {
+        ["Merchant"] = Vector3.new(-926.9259033203125, 131.07879638671875, -1109.68408203125),
+        ["Shipwright"] = Vector3.new(-942.0650024414062, 131.0788116455078, -1116.9296875),
+        ["Angler"] = Vector3.new(-891.7228393554688, 133.57223510742188, -1112.3743896484375),
+        ["Merlin"] = Vector3.new(-953.3898315429688, 222.27720642089844, -989.510498046875),
+        ["Sundial Totem"] = Vector3.new(-1144.8116455078125, 134.49996948242188, -1071.2076416015625),
+    },
+    ["Forshaken"] = {
+        ["Merchant"] = Vector3.new(-2507.628173828125, 135.79074096679688, 1575.7021484375),
+        ["Shipwright"] = Vector3.new(-2484.51025390625, 132.75001525878906, 1545.2064208984375),
+        ["Jack Marrow"] = Vector3.new(-2823.5517578125, 214.20547485351562, 1517.5596923828125),
+    },
+    ["Desolate Deep"] = {
+        ["Merchant"] = Vector3.new(-1660.6583251953125, -213.97946166992188, -2825.622314453125),
+        ["Aurora Totem"] = Vector3.new(-1804.5361328125, -140.42144775390625, -3299.8818359375),
+        ["Mirror"] = Vector3.new(-1627.9610595703125, -206.72789001464844, -2785.255126953125),
+    },
+    ["Vertigo/Depths"] = {
+        ["Synph"] = Vector3.new(-138.6369171142578, -515.2993774414062, 1146.8233642578125),
+        ["Merchant"] = Vector3.new(948.9803466796875, -711.5711669921875, 1262.763671875),
+        ["Angler"] = Vector3.new(977.3062133789062, -702.93115234375, 1234.608154296875),
+        ["Rod Of The Depths"] = Vector3.new(1707.447021484375, -902.527099609375, 1437.1072998046875)
     }
 }
 
@@ -85,7 +141,7 @@ local function TpToNpc(Location, Npc)
     local V3 = TpInfo[Location][Npc]
     local Character = Player.Character
     local HumanoidRootPart = Character.HumanoidRootPart
-    HumanoidRootPart.Position = V3
+    HumanoidRootPart.CFrame = CFrame.new(V3)
 end
 
 local function createInvisibleWalls()
@@ -280,6 +336,7 @@ end)
 
 local Main = Window:CreateTab("Main", 4483362458) -- Title, Image
 local Teleports = Window:CreateTab("Tps") -- Title, Image
+local Other = Window:CreateTab("Other") -- Title, Image
 
 
 -- Rayfield Elements
@@ -331,6 +388,7 @@ local Auto_Catch = Main:CreateToggle({
     end,
  })
 
+ 
     
     local Moosewood_Tps = Teleports:CreateDropdown({
         Name = "Moosewood Tps",
@@ -353,5 +411,117 @@ local Auto_Catch = Main:CreateToggle({
         Callback = function(Options)
             local Selected = table.concat(Options, "")
             TpToNpc("Roslit", Selected)
+        end,
+     })
+
+     local Terrapin_Tps = Teleports:CreateDropdown({
+        Name = "Terrapin Tps",
+        Options = NpcTp["Terrapin"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Terrapin_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Terrapin", Selected)
+        end,
+     })
+
+     local Snowcap_Tps = Teleports:CreateDropdown({
+        Name = "Snowcap Tps",
+        Options = NpcTp["Snowcap"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Snowcap_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Snowcap", Selected)
+        end,
+     })
+
+     local Mushgrove_Tps = Teleports:CreateDropdown({
+        Name = "Mushgrove Tps",
+        Options = NpcTp["Mushgrove"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Mushgrove_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Mushgrove", Selected)
+        end,
+     })
+
+     local Statue_Altar_Tps = Teleports:CreateDropdown({
+        Name = "Statue/Altar Tps",
+        Options = NpcTp["Statue/Altar"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Statue_Altar_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Statue/Altar", Selected)
+        end,
+     })
+
+     local Sunstone_Tps = Teleports:CreateDropdown({
+        Name = "Sunstone Tps",
+        Options = NpcTp["Sunstone"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Sunstone_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Sunstone", Selected)
+        end,
+     })
+
+     local Forshaken_Tps = Teleports:CreateDropdown({
+        Name = "Forshaken Tps",
+        Options = NpcTp["Forshaken"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Forshaken_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Forshaken", Selected)
+        end,
+     })
+
+     local Desolate_Deep_Tps = Teleports:CreateDropdown({
+        Name = "Desolate Deep Tps",
+        Options = NpcTp["Desolate Deep"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Desolate_Deep_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Desolate Deep", Selected)
+        end,
+     })
+
+     local Vertigo_Depths_Tps = Teleports:CreateDropdown({
+        Name = "Vertigo/Depths Tps",
+        Options = NpcTp["Vertigo/Depths"],
+        CurrentOption = "nothing",
+        MultipleOptions = false,
+        Flag = "Vertigo_Depths_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+            TpToNpc("Vertigo/Depths", Selected)
+        end,
+     })
+
+
+
+     local InfiniteYield = Other:CreateButton({
+        Name = "Infinite Yield",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+        end,
+     })
+
+     local ReopenScript = Other:CreateButton({
+        Name = "Reopen Script",
+        Callback = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/DespiseBlockier/testing/refs/heads/main/Fisch.lua'))()
         end,
      })
