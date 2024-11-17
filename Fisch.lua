@@ -10,7 +10,7 @@ local Window = Rayfield:CreateWindow({
     DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
  
     ConfigurationSaving = {
-       Enabled = true,
+       Enabled = false,
        FolderName = "Bagrogi Hub", -- Create a custom folder for your hub/game
        FileName = "Fisch"
     },
@@ -48,6 +48,22 @@ local AutoCastOn = false
 local ToggleAFKOn = false
 local CenterShakeOn = false
 local connection
+
+local NpcTp = {
+    ["Moosewood"] = {"Merchant", "Angler"},
+    ["Roslit"] = {"Merchant", "Shipwright"}
+}
+
+local TpInfo = {
+    ["Moosewood"] = {
+        ["Merchant"] = Vector3.new(466, 152, 233),
+        ["Angler"] = Vector3.new(482, 152, 292)
+    },
+    ["Roslit"] = {
+        ["Merchant"] = Vector3.new(-1461, 135, 687),
+        ["Shipwright"] = Vector3.new(-1454, 135, 739)
+    }
+}
 
 local walls = {}
 local wallHeight = 10
@@ -188,12 +204,12 @@ end
   end
 
   function ToggleAFK()
+    ToggleAFKOn = not ToggleAFKOn
     if ToggleAFKOn == true then
         game:GetService("ReplicatedStorage").events.afk.Name = "afk1"
     else
         game:GetService("ReplicatedStorage").events.afk1.Name = "afk"
     end
-    ToggleAFKOn = not ToggleAFKOn
     ShowNotification("Toggle AFK" ,'Status: ' .. tostring(ToggleAFKOn), 5)
 end
 
@@ -256,6 +272,7 @@ end)
 -- Rayfield Tabs
 
 local Main = Window:CreateTab("Main", 4483362458) -- Title, Image
+local Teleports = Window:CreateTab("Tps") -- Title, Image
 
 
 -- Rayfield Elements
@@ -306,3 +323,26 @@ local Auto_Catch = Main:CreateToggle({
         ToggleAFK()
     end,
  })
+
+    
+    local Moosewood_Tps = Teleports:CreateDropdown({
+        Name = "Moosewood Tps",
+        Options = NpcTp["Moosewood"],
+        CurrentOption = NpcSelected,
+        MultipleOptions = false,
+        Flag = "Moosewood_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+        end,
+     })
+
+     local Roslit_Tps = Teleports:CreateDropdown({
+        Name = "Roslit Tps",
+        Options = NpcTp["Roslit"],
+        CurrentOption = NpcSelected,
+        MultipleOptions = false,
+        Flag = "Roslit_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+        Callback = function(Options)
+            local Selected = table.concat(Options, "")
+        end,
+     })
