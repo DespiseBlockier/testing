@@ -4,7 +4,7 @@ local Window = Rayfield:CreateWindow({
     Name = "Rayfield Example Window",
     LoadingTitle = "Rayfield Interface Suite",
     LoadingSubtitle = "by Sirius",
-    Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+    Theme = "Amethyst", -- Check https://docs.sirius.menu/rayfield/configuration/themes
  
     DisableRayfieldPrompts = false,
     DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
@@ -47,7 +47,11 @@ local AutoCatchOn = false
 local AutoCastOn = false
 local ToggleAFKOn = false
 local CenterShakeOn = false
+local Version = 1
+local Count = 0
 local connection
+
+
 
 local NpcTp = {
     ["Moosewood"] = {"Merchant", "Angler", "Shipwright", "Bait Crate"},
@@ -135,9 +139,29 @@ function ShowNotification(title, msg, dura)
      })
 end
 
+local WaitTime = 600
+task.spawn(function()
+    while true do task.wait(WaitTime)
+        if tonumber(Version) == tonumber(game:HttpGet('https://pastebin.com/raw/BM06pMbT')) then
+            print("up to date")
+        else
+            WaitTime = 4
+            if Count < 8 then
+                ShowNotification("Pls update", "The script is out of date or has a newer version", 3)
+                Count = Count + 1
+            else
+                Rayfield = nil
+                Window = nil
+                loadstring(game:HttpGet('https://raw.githubusercontent.com/DespiseBlockier/testing/refs/heads/main/Fisch.lua'))()
+            end
+        end
+    end
+end)
+
 -- Local Functions
 
 local function TpToNpc(Location, Npc)
+    if Rayfield == nil then return end
     local V3 = TpInfo[Location][Npc]
     local Character = Player.Character
     local HumanoidRootPart = Character.HumanoidRootPart
@@ -145,6 +169,7 @@ local function TpToNpc(Location, Npc)
 end
 
 local function createInvisibleWalls()
+    if Rayfield == nil then return end
     local character = Player.Character
     if not character then return end
 
@@ -175,6 +200,7 @@ local function createInvisibleWalls()
 end
 
 local function removeInvisibleWalls()
+    if Rayfield == nil then return end
     for _, wall in ipairs(walls) do
         wall:Destroy()
     end
@@ -184,6 +210,7 @@ end
 
 
 local function clientSideDetection()
+    if Rayfield == nil then return end
     local reel = LocalPlayer.PlayerGui:FindFirstChild("reel")
     if not reel then return end
 
@@ -199,12 +226,14 @@ local function clientSideDetection()
 end
 
 local function startTracking()
+    if Rayfield == nil then return end
     if connection then connection:Disconnect() end
     
     connection = RunService.RenderStepped:Connect(clientSideDetection)
 end
 
 local function stopTracking()
+    if Rayfield == nil then return end
     if connection then
         connection:Disconnect()
         connection = nil
@@ -214,6 +243,7 @@ end
 
 
 local function rod()
+    if Rayfield == nil then return end
     if game:GetService("Players").LocalPlayer.Character:WaitForChild(game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool"), 5) then
         local rod = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool")
         rod.Parent = game:GetService("Players").LocalPlayer.Backpack
@@ -225,6 +255,7 @@ local function rod()
 end
 
 local function remote()
+    if Rayfield == nil then return end
     local args = {
         [1] = 100
     }
@@ -241,16 +272,19 @@ end
 -- Toggles  
 
   function ToggleCatch()
+    if Rayfield == nil then return end
     AutoCatchOn = not AutoCatchOn
       ShowNotification("Auto Catch" ,'Status: ' .. tostring(AutoCatchOn), 5)
   end
 
   function RealisticAutoCatch()
+    if Rayfield == nil then return end
     RealisticAutoCatchOn = not RealisticAutoCatchOn
       ShowNotification("Realistic Auto Catch" ,'Status: ' .. tostring(RealisticAutoCatchOn), 5)
   end
 
   function AutoCast()
+    if Rayfield == nil then return end
     AutoCastOn = not AutoCastOn
       ShowNotification("Auto Cast" ,'Status: ' .. tostring(AutoCastOn), 5)
       if AutoCastOn then
@@ -262,11 +296,13 @@ end
   end
 
   function CenterShake()
+    if Rayfield == nil then return end
     CenterShakeOn = not CenterShakeOn
       ShowNotification("Center Shake" ,'Status: ' .. tostring(CenterShakeOn), 5)
   end
 
   function ToggleAFK()
+    if Rayfield == nil then return end
     ToggleAFKOn = not ToggleAFKOn
     if ToggleAFKOn == true then
         game:GetService("ReplicatedStorage").events.afk.Name = "afk1"
@@ -281,6 +317,7 @@ end
 -- Connects
 
   LocalPlayer.PlayerGui.DescendantAdded:Connect(function(Descendant)
+    if Rayfield == nil then return end
     if not AutoCatchOn then return end
     if Descendant.Name == 'button' and Descendant.Parent.Name == 'safezone' then
       task.wait(0.1)
@@ -306,12 +343,14 @@ end
 end)
 
 LocalPlayer.PlayerGui.DescendantAdded:Connect(function(descendant)
+    if Rayfield == nil then return end
     if descendant.Name == "playerbar" and descendant.Parent and descendant.Parent.Name == "bar" and RealisticAutoCatchOn == true then
         startTracking()
     end
 end)
 
 LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(descendant)
+    if Rayfield == nil then return end
     if descendant.Name == "playerbar" and descendant.Parent and descendant.Parent.Name == "bar" then
         stopTracking()
         if AutoCastOn then
@@ -322,6 +361,7 @@ LocalPlayer.PlayerGui.DescendantRemoving:Connect(function(descendant)
 end)
 
 LocalPlayer.PlayerGui.ChildAdded:Connect(function(child)
+    if Rayfield == nil then return end
     if child.Name == "shakeui" and CenterShakeOn == true then
         child:WaitForChild("safezone").ChildAdded:Connect(function(c)
             if c.Name == "button" and CenterShakeOn == true then
@@ -393,7 +433,7 @@ local Auto_Catch = Main:CreateToggle({
     local Moosewood_Tps = Teleports:CreateDropdown({
         Name = "Moosewood Tps",
         Options = NpcTp["Moosewood"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Moosewood_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -405,7 +445,7 @@ local Auto_Catch = Main:CreateToggle({
      local Roslit_Tps = Teleports:CreateDropdown({
         Name = "Roslit Tps",
         Options = NpcTp["Roslit"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Roslit_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -417,7 +457,7 @@ local Auto_Catch = Main:CreateToggle({
      local Terrapin_Tps = Teleports:CreateDropdown({
         Name = "Terrapin Tps",
         Options = NpcTp["Terrapin"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Terrapin_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -429,7 +469,7 @@ local Auto_Catch = Main:CreateToggle({
      local Snowcap_Tps = Teleports:CreateDropdown({
         Name = "Snowcap Tps",
         Options = NpcTp["Snowcap"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Snowcap_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -441,7 +481,7 @@ local Auto_Catch = Main:CreateToggle({
      local Mushgrove_Tps = Teleports:CreateDropdown({
         Name = "Mushgrove Tps",
         Options = NpcTp["Mushgrove"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Mushgrove_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -453,7 +493,7 @@ local Auto_Catch = Main:CreateToggle({
      local Statue_Altar_Tps = Teleports:CreateDropdown({
         Name = "Statue/Altar Tps",
         Options = NpcTp["Statue/Altar"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Statue_Altar_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -465,7 +505,7 @@ local Auto_Catch = Main:CreateToggle({
      local Sunstone_Tps = Teleports:CreateDropdown({
         Name = "Sunstone Tps",
         Options = NpcTp["Sunstone"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Sunstone_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -477,7 +517,7 @@ local Auto_Catch = Main:CreateToggle({
      local Forshaken_Tps = Teleports:CreateDropdown({
         Name = "Forshaken Tps",
         Options = NpcTp["Forshaken"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Forshaken_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -489,7 +529,7 @@ local Auto_Catch = Main:CreateToggle({
      local Desolate_Deep_Tps = Teleports:CreateDropdown({
         Name = "Desolate Deep Tps",
         Options = NpcTp["Desolate Deep"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Desolate_Deep_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
@@ -501,7 +541,7 @@ local Auto_Catch = Main:CreateToggle({
      local Vertigo_Depths_Tps = Teleports:CreateDropdown({
         Name = "Vertigo/Depths Tps",
         Options = NpcTp["Vertigo/Depths"],
-        CurrentOption = "nothing",
+        CurrentOption = "...",
         MultipleOptions = false,
         Flag = "Vertigo_Depths_Tps", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
         Callback = function(Options)
