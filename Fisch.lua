@@ -47,8 +47,6 @@ local AutoCatchOn = false
 local AutoCastOn = false
 local ToggleAFKOn = false
 local CenterShakeOn = false
-local Version = 1
-local Count = 0
 local connection
 
 
@@ -139,24 +137,6 @@ function ShowNotification(title, msg, dura)
      })
 end
 
-local WaitTime = 600
-task.spawn(function()
-    while true do task.wait(WaitTime)
-        if tonumber(Version) == tonumber(game:HttpGet('https://pastebin.com/raw/BM06pMbT')) then
-            print("up to date")
-        else
-            WaitTime = 4
-            if Count < 8 then
-                ShowNotification("Pls update", "The script is out of date or has a newer version", 3)
-                Count = Count + 1
-            else
-                Rayfield = nil
-                Window = nil
-                loadstring(game:HttpGet('https://raw.githubusercontent.com/DespiseBlockier/testing/refs/heads/main/Fisch.lua'))()
-            end
-        end
-    end
-end)
 
 -- Local Functions
 
